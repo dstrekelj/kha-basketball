@@ -5,33 +5,46 @@ import game.util.EPlayer;
 
 import kha.Assets;
 import kha.Key;
+import kha.System;
 import kha.graphics2.Graphics;
 import kha.input.Keyboard;
 
 class Player extends Sprite {
     var dy : Int;
     var v : Float;
+    var minY : Float;
+    var maxY : Float;
     var player : EPlayer;
     
     public function new(x : Float, y : Float, player : EPlayer) {
-        super(0, 0, player == EPlayer.PLAYER_1 ? Assets.images.player_a : Assets.images.player_b);
+        super(0, 0, player == EPlayer.PLAYER_1 ? Assets.images.player_striped : Assets.images.player_full);
         
         this.player = player;
         
         positionCenter(x, y);
         
         dy = 0;
-        v = 8;
+        v = 10;
+        minY = 0;
+        maxY = System.windowHeight() - height;
         
         if (Keyboard.get() != null) Keyboard.get().notify(onKeyDown, onKeyUp);
     }
     
     override public function update() : Void {
-        y += dy * v; 
+        y += dy * v;
+        
+        if (y < minY) y = minY;
+        if (y > maxY) y = maxY;
     }
     
     override public function draw(g : Graphics) : Void {
         super.draw(g);
+    }
+    
+    public inline function setMovementBounds(minY : Float, maxY : Float) : Void {
+        this.minY = minY;
+        this.maxY = maxY - height;
     }
     
     private function onKeyDown(key : Key, char : String) : Void {

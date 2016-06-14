@@ -1,7 +1,5 @@
 package game;
 
-import kha.Image;
-
 class Entity extends game.Object {
     public function new(x : Float, y : Float, width : Float, height : Float) {
         super(x, y, width, height);
