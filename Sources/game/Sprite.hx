@@ -4,7 +4,7 @@ import kha.Image;
 import kha.graphics2.Graphics;
 
 class Sprite extends game.Entity {
-    var graphic : Image;
+    public var graphic : Image;
     
     public function new(x : Float, y : Float, graphic : Image) {
         super(x, y, graphic.width, graphic.height);

@@ -1,6 +1,7 @@
 package game.entities;
 
 import game.Sprite;
+import game.util.EPlayer;
 
 import kha.Assets;
 import kha.System;
@@ -15,6 +16,7 @@ class Ball extends Sprite {
     var dx : Int;
     var dy : Int;
     var v : Float;
+    var resolvedCollision : Bool;
     
     public function new(x, y) {
         super(x, y, Assets.images.ball);
@@ -26,7 +28,8 @@ class Ball extends Sprite {
         maxX = System.windowWidth() - width;
         maxY = System.windowHeight() - height;
         
-        v = 3;
+        v = 4;
+        resolvedCollision = false;
     }
     
     override public function update() : Void {
@@ -35,6 +38,10 @@ class Ball extends Sprite {
         
         if (x < minX || x > maxX) dx *= -1;
         if (y < minY || y > maxY) dy *= -1;
+        
+        if (!isOverlapping && resolvedCollision) {
+            resolvedCollision = false;
+        }
     }
     
     override public function draw(g : Graphics) : Void {
@@ -46,5 +53,13 @@ class Ball extends Sprite {
         this.minY = minY;
         this.maxX = maxX - width;
         this.maxY = maxY - height;
+    }
+    
+    public inline function resolveCollision(p : Player) : Void {
+        if (!resolvedCollision) {
+            resolvedCollision = true;
+            dx = (p.player == EPlayer.PLAYER_1) ? 1 : -1;
+            dy = ((y - height) < (p.y + p.height / 2)) ? -1 : 1;
+        }
     }
 }

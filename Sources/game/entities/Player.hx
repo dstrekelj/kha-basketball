@@ -10,11 +10,12 @@ import kha.graphics2.Graphics;
 import kha.input.Keyboard;
 
 class Player extends Sprite {
+    public var player : EPlayer;
+    
     var dy : Int;
     var v : Float;
     var minY : Float;
     var maxY : Float;
-    var player : EPlayer;
     
     public function new(x : Float, y : Float, player : EPlayer) {
         super(0, 0, player == EPlayer.PLAYER_1 ? Assets.images.player_striped : Assets.images.player_full);

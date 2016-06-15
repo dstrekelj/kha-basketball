@@ -24,7 +24,7 @@ class Project {
 		if (Random.Default == null) Random.init(160615);
 		
 		ball = new Ball(System.windowWidth() / 2, System.windowHeight() / 2);
-		ball.setMovementBounds(System.windowWidth() / 9, 0, System.windowWidth() * 8 / 9, System.windowHeight());
+		ball.setMovementBounds(0, 0, System.windowWidth(), System.windowHeight());
 		
 		court = new Court(0, System.windowHeight() * 4 / 5, System.windowWidth(), System.windowHeight() * 1 / 5 - ball.height);
 		
@@ -43,6 +43,18 @@ class Project {
 		teamL.update();
 		teamR.update();
 		ball.update();
+		
+		teamL.each(function (p : Player) {
+			if (ball.overlapsEntity(p)) {
+				ball.resolveCollision(p);
+			}
+		});
+		
+		teamR.each(function (p : Player) {
+			if (ball.overlapsEntity(p)) {
+				ball.resolveCollision(p);
+			}
+		});
 	}
 
 	function render(framebuffer: Framebuffer): Void {
