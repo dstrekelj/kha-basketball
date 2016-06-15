@@ -20,6 +20,7 @@ class Ball extends Sprite {
     
     public function new(x, y) {
         super(x, y, Assets.images.ball);
+        positionCenter(x, y);
         
         Random.Default.GetIn(0, 1) == 0 ? dx = -1 : dx = 1;
         Random.Default.GetIn(0, 1) == 0 ? dy = -1 : dy = 1;

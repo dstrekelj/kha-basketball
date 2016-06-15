@@ -16,6 +16,8 @@ class Project {
 	var teamR : Group<Player>;
 	var court : Court;
 	var ball : Ball;
+	var basketL : Basket;
+	var basketR : Basket;
 	
 	public function new() {
 		System.notifyOnRender(render);
@@ -23,8 +25,11 @@ class Project {
 		
 		if (Random.Default == null) Random.init(160615);
 		
+		basketL = new Basket(System.windowWidth() / 15, System.windowHeight() * 2 / 7, EPlayer.PLAYER_1);
+		basketR = new Basket(System.windowWidth() * 14 / 15, System.windowHeight() * 2 / 7, EPlayer.PLAYER_2);
+		
 		ball = new Ball(System.windowWidth() / 2, System.windowHeight() / 2);
-		ball.setMovementBounds(0, 0, System.windowWidth(), System.windowHeight());
+		ball.setMovementBounds(System.windowWidth() / 15, 0, System.windowWidth() * 14 / 15, System.windowHeight());
 		
 		court = new Court(0, System.windowHeight() * 4 / 5, System.windowWidth(), System.windowHeight() * 1 / 5 - ball.height);
 		
@@ -34,8 +39,8 @@ class Project {
 		teamL.each(function (p) { p.setMovementBounds(System.windowHeight() / 5, court.y); });
 		
 		teamR = new Group<Player>();
-		teamR.add(new Player(System.windowWidth() * 2 / 5, court.y, EPlayer.PLAYER_2));
 		teamR.add(new Player(System.windowWidth() * 4 / 5, court.y, EPlayer.PLAYER_2));
+		teamR.add(new Player(System.windowWidth() * 2 / 5, court.y, EPlayer.PLAYER_2));
 		teamR.each(function (p) { p.setMovementBounds(System.windowHeight() / 5, court.y); });
 	}
 
@@ -68,6 +73,8 @@ class Project {
 		teamL.draw(g2);
 		teamR.draw(g2);
 		ball.draw(g2);
+		basketL.draw(g2);
+		basketR.draw(g2);
 		
 		g2.end();		
 	}
