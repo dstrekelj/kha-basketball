@@ -2,7 +2,7 @@
 
 # kha-basketball
 
-Sources for an Basketball (1974) arcade video game clone, written in [Haxe](http://haxe.org/) using the [Kha](http://kha.tech/) framework.
+Sources for a Basketball (1974) arcade video game clone, written in [Haxe](http://haxe.org/) using the [Kha](http://kha.tech/) framework.
 
 This is a 'learning repository', in a sense. Commit messages are descriptive and concern both the Kha framework and the game cloning process.
 
