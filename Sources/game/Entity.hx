@@ -1,6 +1,8 @@
 package game;
 
-class Entity extends game.Object {
+import kha.graphics2.Graphics;
+
+class Entity extends Object {
     var isOverlapping : Bool;
     
     public function new(x : Float, y : Float, width : Float, height : Float) {

@@ -34,6 +34,8 @@ class Ball extends Sprite {
     }
     
     override public function update() : Void {
+        if (!active) return;
+        
         x += dx * v;
         y += dy * v;
         
@@ -51,6 +53,8 @@ class Ball extends Sprite {
     }
     
     override public function draw(g : Graphics) : Void {
+        if (!visible) return;
+        
         super.draw(g);
     }
     
@@ -77,9 +81,10 @@ class Ball extends Sprite {
                 resolvedCollision = true;
                 if (dy == 1) {
                     if (((x + width * 1 / 2) < (b.x + b.width)) && ((x + width * 1 / 2) > b.x)) {
+                        b.ballsPassed += 1;
                         dx = 0;
                     } else {
-                        dy *= -1; 
+                        dx *= -1; 
                     }
                 } else {
                     dx *= -1;

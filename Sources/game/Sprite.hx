@@ -3,7 +3,7 @@ package game;
 import kha.Image;
 import kha.graphics2.Graphics;
 
-class Sprite extends game.Entity {
+class Sprite extends Entity {
     public var graphic : Image;
     
     public function new(x : Float, y : Float, graphic : Image) {
@@ -12,6 +12,8 @@ class Sprite extends game.Entity {
     }
     
     override public function draw(g : Graphics) : Void {
+        super.draw(g);
+        
         g.drawImage(graphic, x, y);
     }
 }

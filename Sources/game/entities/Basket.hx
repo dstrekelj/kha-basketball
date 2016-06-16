@@ -7,10 +7,15 @@ import kha.Assets;
 import kha.graphics2.Graphics;
 
 class Basket extends Sprite {
+    public var ballsPassed : Int;
+    
     var backboardOffset : Float;
     
     public function new(x : Float, y : Float, player : EPlayer) {
         super(x, y, Assets.images.basket);
+        
+        ballsPassed = 0;
+        
         backboardOffset = 0;
         
         if (player == PLAYER_2) {

@@ -3,8 +3,10 @@ package;
 import game.*;
 import game.entities.*;
 import game.objects.*;
+import game.ui.*;
 import game.util.*;
 
+import kha.Assets;
 import kha.Color;
 import kha.Framebuffer;
 import kha.Scheduler;
@@ -18,6 +20,10 @@ class Project {
 	var ball : Ball;
 	var basketL : Basket;
 	var basketR : Basket;
+	var instructions : Text;
+	var scoreL : Text;
+	var scoreR : Text;
+	var timer : Timer;
 	
 	public function new() {
 		System.notifyOnRender(render);
@@ -42,6 +48,18 @@ class Project {
 		teamR.add(new Player(System.windowWidth() * 4 / 5, court.y, EPlayer.PLAYER_2));
 		teamR.add(new Player(System.windowWidth() * 2 / 5, court.y, EPlayer.PLAYER_2));
 		teamR.each(function (p) { p.setMovementBounds(System.windowHeight() / 5, court.y); });
+		
+		instructions = new Text(Assets.fonts.slkscr, 16);
+		instructions.value = "PLAYER 1: STRIPED. 'W' - UP, 'S' - DOWN.    PLAYER 2: OPAQUE. 'O' - UP, 'L' - DOWN.";
+		instructions.position(0, System.windowHeight() - instructions.height);
+		
+		scoreL = new Text(Assets.fonts.slkscr, 64);
+		scoreR = new Text(Assets.fonts.slkscr, 64);
+		
+		timer = new Timer(Assets.fonts.slkscr, 64, 110);
+		timer.positionCenter(System.windowWidth() / 2, timer.height);
+		timer.onComplete = endGame;
+		Scheduler.addTimeTask(timer.update, 0, 1, timer.time);
 	}
 
 	function update(): Void {
@@ -59,8 +77,12 @@ class Project {
 		
 		if (ball.x < (System.windowWidth() / 2)) {
 			ball.resolveBasketCollision(basketL);
+			scoreR.value = Std.string(basketL.ballsPassed);
+			scoreR.positionCenter(System.windowWidth() * 2 / 3, System.windowHeight() - scoreR.height);
 		} else {
 			ball.resolveBasketCollision(basketR);
+			scoreL.value = Std.string(basketR.ballsPassed);
+			scoreL.positionCenter(System.windowWidth() / 3, System.windowHeight() - scoreL.height);
 		}
 	}
 
@@ -78,6 +100,19 @@ class Project {
 		basketL.draw(g2);
 		basketR.draw(g2);
 		
+		timer.draw(g2);
+		
+		instructions.draw(g2);
+		
+		g2.color = Color.fromValue(0xff333333);
+		scoreL.draw(g2);
+		scoreR.draw(g2);
+		
 		g2.end();		
+	}
+	
+	function endGame() : Void {
+		ball.active = false;
+		ball.visible = false;
 	}
 }
