@@ -38,7 +38,12 @@ class Ball extends Sprite {
         y += dy * v;
         
         if (x < minX || x > maxX) dx *= -1;
-        if (y < minY || y > maxY) dy *= -1;
+        if (y < minY || y > maxY) {
+            dy *= -1;
+            if (dx == 0) {
+                dx = (x < System.windowWidth() / 2) ? 1 : -1; 
+            }
+        }
         
         if (!isOverlapping && resolvedCollision) {
             resolvedCollision = false;
@@ -56,11 +61,30 @@ class Ball extends Sprite {
         this.maxY = maxY - height;
     }
     
-    public inline function resolveCollision(p : Player) : Void {
-        if (!resolvedCollision) {
-            resolvedCollision = true;
-            dx = (p.player == EPlayer.PLAYER_1) ? 1 : -1;
-            dy = ((y - height) < (p.y + p.height / 2)) ? -1 : 1;
+    public inline function resolvePlayerCollision(p : Player) : Void {
+        if (overlapsEntity(p)) {
+            if (!resolvedCollision) {
+                resolvedCollision = true;
+                dx = (p.player == EPlayer.PLAYER_1) ? 1 : -1;
+                dy = ((y - height) < (p.y + p.height / 2 - height)) ? -1 : 1;
+            }
+        }
+    }
+    
+    public inline function resolveBasketCollision(b : Basket) : Void {
+        if (overlapsEntity(b)) {
+            if (!resolvedCollision) {
+                resolvedCollision = true;
+                if (dy == 1) {
+                    if (((x + width * 1 / 2) < (b.x + b.width)) && ((x + width * 1 / 2) > b.x)) {
+                        dx = 0;
+                    } else {
+                        dy *= -1; 
+                    }
+                } else {
+                    dx *= -1;
+                }
+            }
         }
     }
 }

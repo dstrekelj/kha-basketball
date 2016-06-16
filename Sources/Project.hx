@@ -50,16 +50,18 @@ class Project {
 		ball.update();
 		
 		teamL.each(function (p : Player) {
-			if (ball.overlapsEntity(p)) {
-				ball.resolveCollision(p);
-			}
+			ball.resolvePlayerCollision(p);
 		});
 		
 		teamR.each(function (p : Player) {
-			if (ball.overlapsEntity(p)) {
-				ball.resolveCollision(p);
-			}
+			ball.resolvePlayerCollision(p);
 		});
+		
+		if (ball.x < (System.windowWidth() / 2)) {
+			ball.resolveBasketCollision(basketL);
+		} else {
+			ball.resolveBasketCollision(basketR);
+		}
 	}
 
 	function render(framebuffer: Framebuffer): Void {
