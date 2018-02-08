@@ -1,10 +1,10 @@
 package game.entities;
 
-import game.Sprite;
-import game.util.EPlayer;
-
 import kha.Assets;
 import kha.graphics2.Graphics;
+
+import game.Sprite;
+import game.util.EPlayer;
 
 class Basket extends Sprite {
     public var ballsPassed : Int;
